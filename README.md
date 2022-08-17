@@ -59,3 +59,23 @@ rateOfChangeBuffer(int i, int j, circularBuffer cb1, circularBuffer cb2){
     max = arrayLength - 1;
  }
 ```
+
+Now that the rateOfChangeBuffer data structure is complete, we will create a new class called lightningStorm, as the end result resembles a dense lightning storm. Each lightningStorm has a variable called stormSize. It will also have a 2D-Array of rateOfChange buffers both of length stormSize. As well as two arrays of circularBuffers, each of length stormSize. 
+```processing
+class lightningStorm {
+  int stormLength = 15;
+  rateOfChangeBuffer[][] storm;
+  circularBuffer[] buffersOne;
+  circularBuffer[] buffersTwo;
+ 
+  
+lightningStorm(){
+    buffersOne = new circularBuffer[stormLength];
+    buffersTwo = new circularBuffer[stormLength];
+  
+    for(int i = 0; i < stormLength; i++){
+      buffersOne[i] = new circularBuffer(1, i + 1);
+      buffersTwo[i] = new circularBuffer(1, i + 1);
+    }
+    storm = new rateOfChangeBuffer[stormLength][stormLength];
+```
