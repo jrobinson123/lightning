@@ -35,7 +35,41 @@ I was interested in using these circular buffers to find rate of changes and vis
 
 I didn't find this interesting enough so I instead opted to create rates of change by simultaneously polling from two circular buffers and then taking there ratio. 
 
+Ex. for a circular buffer of length 3 and one of length 5
 
-![Ex. for a circular buffer of length 3 and one of length 5](bufferDiagram.png)
+![](bufferDiagram.png)
 
+I decided to create a new data structure called a rateOfChangeBuffer. It acts very similarly to my previous circularBuffer. However it is desgined to return the subsequent ratios between polling two circularBuffers. This is possible because polling circularBuffers and taking their ratio is guarnteed to be cyclical, specifically the cycle length is the least common multiple of the lengths of each circularBuffer. 
+
+Like the circularBuffer, the rateOfChangeBuffer has a max value (called max), a current value (called currentIndex), and an implicit start point at 0. Unlike the circularBuffer, rateOfChangeBuffer also has an array of floats. The array is of size max + 1 (so that each value currentIndex can index into changes)
+```processing
+int max;
+int currentIndex = 0;
+float[] changes;
+``
+rateOfChangeBuffer(int i, int j, circularBuffer cb1, circularBuffer cb2){
+  max = lcm(i, j);
+  changes = new float[max];
+  for (int z = 0; z < max; z++) {
+      changes[z] = cb1.next() / cb2.next();
+  }
+}
+```
+
+
+
+
+However when you poll, it will instead of return what the value indexes in an array. 
+```processing
+float next() {
+    float valToReturn = changes[currentIndex];
+    if (currentIndex == max - 1) {
+      currentIndex = 0;
+    }else{
+       currentIndex += 1;
+     }
+    return valToReturn;
+  }
+```
+changes is an array of 
 
