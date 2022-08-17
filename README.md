@@ -33,7 +33,7 @@ class circularBuffer{
 I was interested in using these circular buffers to find rate of changes and visualize functions with them. Using one circular buffer would for example have a rate of change of 1, then a rate of change of 2, then rate of change of 3 ect.  (This would actually just create a quadratic function)
 
 
-I didn't find this interesting enough so I instead opted to create rates of change by simultaneously polling from two circular buffers and then taking there ratio. 
+I didn't find this interesting enough so I instead opted to create rates of change by simultaneously polling from two circular buffers and then taking their ratio. 
 
 Ex. for a circular buffer of length 3 and one of length 5
 
@@ -46,30 +46,16 @@ Like the circularBuffer, the rateOfChangeBuffer has a max value (called max), a 
 int max;
 int currentIndex = 0;
 float[] changes;
-``
-rateOfChangeBuffer(int i, int j, circularBuffer cb1, circularBuffer cb2){
-  max = lcm(i, j);
-  changes = new float[max];
-  for (int z = 0; z < max; z++) {
-      changes[z] = cb1.next() / cb2.next();
-  }
-}
 ```
 
-
-
-
-However when you poll, it will instead of return what the value indexes in an array. 
+The constructor for rateOfChangeBuffer takes two circularBuffers: cb1 and cb2 as well as their sizes i and j respectively. The length of the new changes array is determined using i and j. The changes array is then populated by polling the cb1 and cb2 circularBuffers.
 ```processing
-float next() {
-    float valToReturn = changes[currentIndex];
-    if (currentIndex == max - 1) {
-      currentIndex = 0;
-    }else{
-       currentIndex += 1;
-     }
-    return valToReturn;
-  }
+rateOfChangeBuffer(int i, int j, circularBuffer cb1, circularBuffer cb2){
+    int arrayLength = lcm(i, j);
+    changes = new float[arrayLength];
+    for (int z = 0; z < arrayLength; z++) {
+        changes[z] = cb1.next() / cb2.next();
+    }
+    max = arrayLength - 1;
+ }
 ```
-changes is an array of 
-
