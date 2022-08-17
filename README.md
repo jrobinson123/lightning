@@ -91,3 +91,25 @@ for (int i = 0; i < stormLength; i++) {
     }
  }
 ```
+Now that storm is populated, we can visualize what it returns. This is done by using a nestedLoop to every rateOfChangeBuffer in storm. Once this is down a series of lines, with the rate of change based on a poll from the rateOfChangeBuffer is drawn until we go off the screen either vertically or horizontally.
+```processing
+void show(){
+    stroke(148, 246, 255, 100);
+    for (int i = 0; i < stormLength; i++) {
+        for (int j = 0; j < stormLength; j++) {
+            int y = 400;
+            int prevX = 0;
+            int prevY = 400;
+            int x = 0;
+            while(x < width && y >= 0){
+              float change = storm[i][j].next();
+              y -= change;
+              line(prevX,prevY,x,y);
+              prevX = x;
+              prevY = y;
+              x += 1;
+        }
+      }
+    }
+  }
+```
