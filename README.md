@@ -35,8 +35,7 @@ I was interested in using these circular buffers to find rate of changes and vis
 
 I didn't find this interesting enough so I instead opted to create rates of change by simultaneously polling from two circular buffers and then taking there ratio. 
 
-Ex. for a circular buffer of length 3 and one of length 5
 
-
+![Ex. for a circular buffer of length 3 and one of length 5](bufferDiagram.png)
 
 
