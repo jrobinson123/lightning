@@ -1,1 +1,2 @@
 # lightning
+![](lightningStormGif.gif);
